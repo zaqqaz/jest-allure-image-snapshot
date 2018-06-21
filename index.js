@@ -18,4 +18,6 @@ function toMatchImageSnapshot(...args) {
     return result;
 }
 
-expect.extend({ toMatchImageSnapshot });
+module.exports = function registerAllureImageSnapshot() {
+    expect.extend({ toMatchImageSnapshot });
+};

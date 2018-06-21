@@ -12,3 +12,14 @@ or
 ```
 npm install --save-dev jest-allure-image-snapshot
 ```
+
+
+You also should configure `setupTestFrameworkScriptFile`  if you don't have yet your own it will look so:
+
+```
+const registerAllureReporter = require("jest-allure/dist/setup").registerAllureReporter;
+const registerAllureImageSnapshot = require("jest-allure-image-snapshot");
+registerAllureReporter();
+registerAllureImageSnapshot();
+
+```
