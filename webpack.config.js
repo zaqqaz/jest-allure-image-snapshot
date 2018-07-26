@@ -12,10 +12,6 @@ const getPlugins = (env = {}) => [
 
 module.exports = {
     resolve: {
-        alias: {
-            imc: path.resolve(__dirname, './'),
-            pixelmatch: path.resolve(__dirname, "./node_modules/dynamicpixelmatch"),
-        },
         extensions: [".tsx", ".ts", ".js"],
     },
     plugins: getPlugins(),
@@ -23,19 +19,12 @@ module.exports = {
         rules: [],
     },
     entry: {
-        index: "./index.js",
+        index: "./src/index.js",
     },
-    node: {
-        fs: 'empty' ,
-        child_process: 'empty' ,
-    },
+    target: 'node',
     output: {
         path: path.resolve(__dirname, "dist"),
-        filename: "[name].js"
-    },
-    devServer: {
-        contentBase: path.join(__dirname, 'dist'),
-        compress: true,
-        port: 9000
+        filename: "[name].js",
+        libraryTarget: 'commonjs',
     },
 };

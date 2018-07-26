@@ -1,11 +1,9 @@
-const { toMatchImageSnapshot: jestToMatchImageSnapshot } = require("jest-image-snapshot");
+const { toMatchImageSnapshot: jestToMatchImageSnapshot } = require("./imageSnapshot");
 
 const fs = require("fs");
 
 function toMatchImageSnapshot(...args) {
-    /* tslint:disable */
     const result = jestToMatchImageSnapshot.apply(this, args);
-    /* tslint:enable */
 
     if (!result.pass) {
         const message = result.message();
@@ -18,6 +16,10 @@ function toMatchImageSnapshot(...args) {
     return result;
 }
 
-module.exports = function registerAllureImageSnapshot() {
+function registerAllureImageSnapshot() {
     expect.extend({ toMatchImageSnapshot });
+}
+
+module.exports = {
+    registerAllureImageSnapshot,
 };
