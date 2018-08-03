@@ -1,6 +1,6 @@
 const { alignImagesToSameSize } = require("./imageResizer");
+const { dynamicPixelmatch } = require('./dynamicPixelmatch');
 
-const pixelmatch = require('dynamicpixelmatch');
 const fs = require('fs');
 const path = require('path');
 const childProcess = require('child_process');
@@ -27,11 +27,18 @@ function diffImageToSnapshot(options) {
   } = options;
 
   let result = {};
+  let excludedAreas = [];
+  const baselineSnapshotJSONPath = path.join(snapshotsDir, `${snapshotIdentifier}-snap.png.json`);
   const baselineSnapshotPath = path.join(snapshotsDir, `${snapshotIdentifier}-snap.png`);
   if (!fs.existsSync(baselineSnapshotPath)) {
     mkdirp.sync(snapshotsDir);
     fs.writeFileSync(baselineSnapshotPath, receivedImageBuffer);
     result = { added: true };
+      if (fs.existsSync(baselineSnapshotJSONPath)) {
+          const jsonContent = fs.readFileSync(baselineSnapshotJSONPath, "utf8");
+          const jsonContentParsed = JSON.parse(jsonContent);
+          excludedAreas = jsonContentParsed.exclude || [];
+      }
   } else {
     const outputDir = path.join(snapshotsDir, '__diff_output__');
     const diffOutputPath = path.join(outputDir, `${snapshotIdentifier}-diff.png`);
@@ -58,14 +65,15 @@ function diffImageToSnapshot(options) {
     const imageHeight = receivedImage.height;
     const diffImage = new PNG({ width: imageWidth, height: imageHeight });
 
-    const diffPixelCount = pixelmatch(
-      receivedImage.data,
-      baselineImage.data,
-      diffImage.data,
-      imageWidth,
-      imageHeight,
-      diffConfig
-    );
+      const diffPixelCount = dynamicPixelmatch(
+          receivedImage.data,
+          baselineImage.data,
+          diffImage.data,
+          imageWidth,
+          imageHeight,
+          diffConfig,
+          excludedAreas,
+      );
 
     const totalPixels = imageWidth * imageHeight;
     const diffRatio = diffPixelCount / totalPixels;
