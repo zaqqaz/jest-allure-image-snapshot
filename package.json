@@ -1,14 +1,20 @@
 {
   "name": "jest-allure-image-snapshot",
   "version": "0.0.4",
-  "main": "src/index",
+  "main": "dist/index",
   "repository": "https://github.com/zaqqaz/jest-allure-image-snapshot.git",
   "author": "Denis Artyuhovich <i@denis.by>",
   "license": "MIT",
   "dependencies": {
+    "chalk": "^2.4.1",
     "dynamicpixelmatch": "^0.0.2",
+    "get-stdin": "^6.0.0",
     "jest-allure": "^0.1.1",
-    "jest-image-snapshot": "^2.4.3"
+    "jest-image-snapshot": "^2.4.3",
+    "lodash": "^4.17.10",
+    "mkdirp": "^0.5.1",
+    "pngjs": "^3.3.3",
+    "rimraf": "^2.6.2"
   },
   "devDependencies": {
     "@types/jest-image-snapshot": "^2.4.0",
