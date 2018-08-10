@@ -1,6 +1,6 @@
 {
   "name": "jest-allure-image-snapshot",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "dist/index",
   "repository": "https://github.com/zaqqaz/jest-allure-image-snapshot.git",
   "author": "Denis Artyuhovich <i@denis.by>",
