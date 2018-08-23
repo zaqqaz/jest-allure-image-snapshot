@@ -11,7 +11,8 @@ function registerAllureImageSnapshot(config) {
 
         if (!result.pass) {
             const message = result.message();
-            const fileName = config.customSnapshotsDir + /\/(.*).png/gm.exec(message)[0];
+
+            const fileName = config.customSnapshotsDir + /(?=[^ ]+$)(.*).png/gm.exec(message)[0];
 
             if (fileName && fs.existsSync(fileName)) {
                 const buffer = fs.readFileSync(fileName);
