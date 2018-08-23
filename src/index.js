@@ -1,5 +1,5 @@
 const { configureToMatchImageSnapshot } = require("./imageSnapshot");
-
+const stripAnsi = require("strip-ansi");
 const fs = require("fs");
 
 function registerAllureImageSnapshot(config) {
@@ -10,7 +10,7 @@ function registerAllureImageSnapshot(config) {
         const result = jestToMatchImageSnapshot.apply(this, args);
 
         if (!result.pass) {
-            const message = result.message();
+            const message = stripAnsi(result.message());
 
             const fileName = /(?=[^ ]+$)(.*).png/gm.exec(message)[0];
 
