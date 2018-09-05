@@ -12,11 +12,15 @@ function registerAllureImageSnapshot(config) {
         if (!result.pass) {
             const message = stripAnsi(result.message());
 
-            const fileName = /(?=[^ ]+$)(.*).png/gm.exec(message)[0];
+            const filePattern = /(?=[^ ]+$)(.*).png/gm.exec(message);
 
-            if (fileName && fs.existsSync(fileName)) {
-                const buffer = fs.readFileSync(fileName);
-                reporter.addAttachment("Image Snapshot Diff", buffer, "image/png");
+            if(filePattern) {
+                const fileName = filePattern[0];
+
+                if (fileName && fs.existsSync(fileName)) {
+                    const buffer = fs.readFileSync(fileName);
+                    reporter.addAttachment("Image Snapshot Diff", buffer, "image/png");
+                }
             }
         }
         return result;
