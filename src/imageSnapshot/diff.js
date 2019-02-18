@@ -40,6 +40,10 @@ function diffImageToSnapshot(options) {
           excludedAreas = jsonContentParsed.exclude || [];
       }
   } else {
+    const baseLineImageBuffer = fs.readFileSync(baselineSnapshotPath);
+    if (receivedImageBuffer.equals(baseLineImageBuffer)) {
+      return { pass: true };
+    }
     const outputDir = path.join(snapshotsDir, '__diff_output__');
     const diffOutputPath = path.join(outputDir, `${snapshotIdentifier}-diff.png`);
     rimraf.sync(diffOutputPath);
@@ -51,7 +55,7 @@ function diffImageToSnapshot(options) {
     const diffConfig = Object.assign({}, defaultDiffConfig, customDiffConfig);
 
     const rawReceivedImage = PNG.sync.read(receivedImageBuffer);
-    const rawBaselineImage = PNG.sync.read(fs.readFileSync(baselineSnapshotPath));
+    const rawBaselineImage = PNG.sync.read(baseLineImageBuffer);
     const hasSizeMismatch = (
       rawReceivedImage.height !== rawBaselineImage.height ||
       rawReceivedImage.width !== rawBaselineImage.width
