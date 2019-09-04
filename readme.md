@@ -13,8 +13,12 @@ or
 npm install --save-dev jest-allure-image-snapshot
 ```
 
+## Configuration With Jest
+
+### For older version of jest:
 
 You also should configure `setupTestFrameworkScriptFile`  if you don't have yet your own it will look so:
+
 
 ```
 const registerAllureReporter = require("jest-allure/dist/setup").registerAllureReporter;
@@ -23,3 +27,16 @@ registerAllureReporter();
 registerAllureImageSnapshot();
 
 ```
+
+### For newer version of jest:
+
+You should wire the config within `setupFilesAfterEnv` property)
+```
+const jestAllureSetup = require("jest-allure/dist/setup");
+const jestAllureImageSnapshot = require("jest-allure-image-snapshot");
+jestAllureSetup.registerAllureReporter();
+jestAllureImageSnapshot.registerAllureImageSnapshot('');
+```
+
+### Gotchas
+WARNNING: since `jest-image-snapshot` also extend `toMatchImageSnapshot` as this library does, one can not use both at the sametime. As they will override each other depends on who got load laster in a config file.
