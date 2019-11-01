@@ -11,7 +11,7 @@
     "get-stdin": "^6.0.0",
     "jest-allure": "^0.1.1",
     "jest-image-snapshot": "^2.4.3",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.13",
     "mkdirp": "^0.5.1",
     "pngjs": "^3.3.3",
     "rimraf": "^2.6.2"
